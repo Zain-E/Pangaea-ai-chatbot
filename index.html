@@ -149,14 +149,17 @@
         .logo-icon {
             width: 36px;
             height: 36px;
-            background: linear-gradient(135deg, var(--accent-green) 0%, #16a34a 100%);
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: var(--bg-primary);
+            overflow: hidden;
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .logo-text {
@@ -257,12 +260,14 @@
             align-items: center;
             justify-content: center;
             margin-bottom: 1.5rem;
+            overflow: hidden;
+            padding: 10px;
         }
 
-        .welcome-icon svg {
-            width: 40px;
-            height: 40px;
-            color: var(--accent-green);
+        .welcome-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         .welcome-title {
@@ -344,11 +349,19 @@
             justify-content: center;
             font-size: 0.875rem;
             font-weight: 600;
+            overflow: hidden;
         }
 
         .message.assistant .message-avatar {
-            background: linear-gradient(135deg, var(--accent-green) 0%, #16a34a 100%);
-            color: var(--bg-primary);
+            background: transparent;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            padding: 3px;
+        }
+
+        .message.assistant .message-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .message.user .message-avatar {
@@ -577,7 +590,9 @@
     <div class="app-container">
         <header class="header">
             <a href="https://pangaea-ai.co.uk/" class="logo">
-                <div class="logo-icon">P</div>
+                <div class="logo-icon">
+                    <img src="assets/pangaea-icon.png" alt="Pangaea Logo">
+                </div>
                 <span class="logo-text">Pan<span class="green">gaea</span></span>
             </a>
             <div class="header-status">
@@ -591,11 +606,7 @@
                 <!-- Welcome state - shown when no messages -->
                 <div class="welcome-state" id="welcomeState">
                     <div class="welcome-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                            <path d="M2 17l10 5 10-5"/>
-                            <path d="M2 12l10 5 10-5"/>
-                        </svg>
+                        <img src="assets/pangaea-icon.png" alt="Pangaea">
                     </div>
                     <h1 class="welcome-title">Pan<span style="color: #22c55e;">gaea</span> Ai</h1>
                     <p class="welcome-subtitle">
@@ -767,7 +778,13 @@
             
             const avatar = document.createElement('div');
             avatar.className = 'message-avatar';
-            avatar.textContent = role === 'assistant' ? 'P' : 'U';
+            
+            // Use image for assistant, keep "U" for user
+            if (role === 'assistant') {
+                avatar.innerHTML = '<img src="assets/pangaea-icon.png" alt="Pangaea">';
+            } else {
+                avatar.textContent = 'U';
+            }
             
             const contentDiv = document.createElement('div');
             contentDiv.className = 'message-content';
@@ -814,7 +831,7 @@
             typingDiv.id = 'typingIndicator';
             
             typingDiv.innerHTML = `
-                <div class="message-avatar">P</div>
+                <div class="message-avatar"><img src="assets/pangaea-icon.png" alt="Pangaea"></div>
                 <div class="message-content">
                     <div class="typing-indicator">
                         <span></span>
